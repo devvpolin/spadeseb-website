@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SpadesEB - Discord Bot</title>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1101623251093966938/95f2fe8109963ffc28f675cafc5fa794.png?size=128">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            --bg-opacity: 0;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            background-color: #1e1e2f;
+            transition: --bg-opacity 0.3s ease-out;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(30, 30, 47, 0.9);
+            backdrop-filter: blur(6px);
+            z-index: 10;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px 30px;
+            box-sizing: border-box;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-bot-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .header-bot-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #ffffff;
+            user-select: none;
+        }
+
+        .header-right a {
+            color: #ffffff;
+            background-color: #5865F2;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            user-select: none;
+        }
+
+        .header-right a:hover {
+            background-color: #4752c4;
+            transform: scale(1.05);
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('https://media.discordapp.net/attachments/1377012075104178226/1384516092688470057/Layer_9_1.png?ex=68555997&is=68540817&hm=0a93cc4cb23508dcaeec39a20e994be840b6fa577cbb332742a74cfd8a549163&=&format=webp&quality=lossless') no-repeat center center;
+            background-size: cover;
+            opacity: var(--bg-opacity);
+            filter: blur(5px);
+            transition: opacity 0.5s ease-out;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start;
+            padding: 100px 50px 50px;
+            box-sizing: border-box;
+            background-color: rgba(30, 30, 47, 0.95);
+        }
+
+        .bot-profile {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease;
+        }
+
+        .creator-message {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(45, 45, 60, 0.9);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px 20px;
+            max-width: 600px;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .creator-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .creator-content {
+            flex: 1;
+        }
+
+        .creator-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #beccef;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .creator-typing {
+            font-size: 1em;
+            white-space: pre-wrap;
+            min-height: 1.5em;
+            border-right: 2px solid #ffffff;
+            overflow: hidden;
+            animation: blink-caret 1s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #ffffff; }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            max-width: 600px;
+            animation: fadeIn 2s ease;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #5865F2;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: fadeIn 2s ease;
+        }
+
+        .button:hover {
+            background-color: #4752c4;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .changelog {
+            max-width: 900px;
+            text-align: left;
+            background-color: rgba(30,30,47,0.85);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.6);
+        }
+
+        .version {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #2c2c3e;
+            border-radius: 8px;
+            animation: fadeIn 2s ease;
+        }
+
+        .version h2 {
+            margin-top: 0;
+            color: #66ccff;
+        }
+
+        .version ul {
+            padding-left: 20px;
+        }
+
+        .version-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .version-images img {
+            flex: 1 1 calc(50% - 12px);
+            max-width: calc(50% - 12px);
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 600px) {
+            .version-images img {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+
+        .glassy-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1em;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .glassy-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+            transform: skewX(-25deg);
+            transition: left 0.5s ease;
+        }
+
+        .glassy-button:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .glassy-button:hover::before {
+            left: 125%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-image"></div>
+
+    <header>
+        <div class="header-left">
+            <img
+                src="https://cdn.discordapp.com/avatars/1101623251093966938/95f2fe8109963ffc28f675cafc5fa794.png?size=128"
+                alt="SpadesEB Bot"
+                class="header-bot-avatar"
+            />
+            <span class="header-bot-name">SpadesEB</span>
+        </div>
+
+        <div class="header-right">
+            <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            <a href="terms-of-service.html" target="_blank" rel="noopener noreferrer">Terms Of Service</a>
+        </div>
+    </header>
+
+    <section>
+        <div class="creator-message">
+            <img src="https://cdn.discordapp.com/avatars/1064683563280236544/5fa700750244547a34dd8826498bbeac.png?size=4096" alt="AdnanDev Profile Picture" class="creator-avatar" />
+            <div class="creator-content">
+            <div class="creator-name">
+                adnandev
+                <img src="https://cdn.discordapp.com/attachments/1377012075104178226/1383796740334944306/own2.png?ex=68555ea4&is=68540d24&hm=91e3c0d5868e2d4e927284cc43f7083abc9cbab11f93169dfe75591125d7109c&" 
+                    alt="Role Icon"
+                    style="height: 18px; width: 18px; vertical-align: middle; border-radius: 4px;">
+            </div>
+                <div class="creator-typing" id="typing-text"></div>
+            </div>
+        </div>
+
+        <img src="https://cdn.discordapp.com/avatars/1101623251093966938/95f2fe8109963ffc28f675cafc5fa794.png?size=4096" alt="Bot Profile Picture" class="bot-profile" />
+
+        <h1>SpadesEB</h1>
+
+        <p>An advanced customizable economy system + job system + shop + auto events sent out! (Everything is customizable, including currency name)</p>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
+
+        <a href="https://discord.com/oauth2/authorize?client_id=1101623251093966938&permissions=2147863616&integration_type=0&scope=bot+applications.commands" target="_blank" class="glassy-button">
+            <img src="https://cdn.discordapp.com/avatars/1101623251093966938/95f2fe8109963ffc28f675cafc5fa794.png?size=4096" style="width: 24px; height: 24px; border-radius: 6px;">
+            Invite SpadesEB
+        </a>
+
+        <a href="https://discord.gg/HHUgukKajt" target="_blank" class="glassy-button">
+            <img src="https://cdn.discordapp.com/attachments/1376296597260075018/1385306146340077699/Untitled_Project__8_-removebg-preview.png?ex=68559663&is=685444e3&hm=cb9901d3219098255f42a0a044aa30c6a771b260ee731ddb51777c28dc9e7f88&" style="width: 24px; height: 24px;">
+            Join Support Server
+        </a>
+</div>
+
+    </section>
+
+    <section id="versionHistory">
+        <h1>Version History</h1>
+        <div class="changelog">
+
+            <div class="version">
+                <h2>v2.0 - June 18, 2025</h2>
+                <ul>
+                    <li>New "Who Said That Quote" Event!</li>
+                    <li>Your server can add quotes using /settings > Event Settings > Quote Event Settings. The bot sends out that quote and users try to guess who made the quote.</li>
+                </ul>
+                <div class="version-images">
+                    <img src="https://cdn.discordapp.com/attachments/1064891973980397578/1385261602097467563/quotesettings.jpg?ex=68556ce6&is=68541b66&hm=f74ddcac439804e1bcd63659d828aab7c17abf046bafee64d69974286c6dd5f2&" alt="Screenshot 1" />
+                    <img src="https://cdn.discordapp.com/attachments/1222560401112174655/1385263902853697556/image.png?ex=68556f0b&is=68541d8b&hm=adde6614417550b84d8b783ec12d77390b0d826eab54518432e57182bfbdec0e&" alt="Screenshot 2" />
+                </div>
+            </div>
+
+            <div class="version">
+                <h2>v1.9 - June 8, 2025</h2>
+                <ul>
+                    <li>Job System is now live!</li>
+                    <li>Server managers can now add jobs with job titles, work XP given, work XP required, and difficulty of minigames (Extreme difficulty still in progress).</li>
+                </ul>
+                <div class="version-images">
+                    <img src="https://cdn.discordapp.com/attachments/1222560401112174655/1385262861491900520/image.png?ex=68556e13&is=68541c93&hm=4e5c33adbbc763b09e5af58e9a13a8a9e602844e226adc9cc01269dd8a9fce6e&" alt="Job System 2" />
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const versionHistorySection = document.getElementById('versionHistory');
+
+        window.addEventListener('scroll', () => {
+            const sectionTop = versionHistorySection.getBoundingClientRect().top;
+            const sectionHeight = versionHistorySection.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            const start = windowHeight;
+            const end = -sectionHeight;
+
+            const progress = Math.min(Math.max((start - sectionTop) / (start - end), 0), 1);
+
+            document.body.style.setProperty('--bg-opacity', (progress * 0.95).toFixed(2));
+        });
+
+        const text = "Hey user! I'm adnandev, the creator of this bot. If you have any questions or concerns, you can reach me via the support server below!";
+        const typingElement = document.getElementById('typing-text');
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typingElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, 50);
+            }
+        }
+
+        type();
+    </script>
+
+</body>
+</html>
