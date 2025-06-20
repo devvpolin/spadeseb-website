@@ -81,6 +81,33 @@
     ul {
       padding-left: 20px;
     }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+      }
+
+      .header-right {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .header-right a {
+        width: 100%;
+        text-align: center;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+  }
+
   </style>
 </head>
 <body>
@@ -128,7 +155,7 @@
       <li>To send out the events based off of YOUR event settings.</li>
     </ul>
 
-    <h2>How Long Your Data Remain With With US</h2>
+    <h2>How Long Your Data Remains With Us</h2>
     <ul>
       Your userID, event questions'n'answers, job title - from the job system via the bot, guildId, etc, will be stored until explicitly deleted (you can request to do so via our support server) or until SpadesEB is no longer in service.
     </ul>
@@ -146,7 +173,9 @@
     <p>We may update this policy occasionally and reserve the right to do so. We recommend checking back periodically.</p>
 
     <h2>Contact Us</h2>
-    <p>If you have any questions or concerns about this Privacy Policy, please contact us via the support server.</p>
+    <p>If you have any questions or concerns about this Privacy Policy, please contact us via the
+      <a href="https://discord.gg/HHUgukKajt" style="color: #66ccff; text-decoration: underline;">Support Server</a>.
+    </p>
   </main>
 </body>
 </html>

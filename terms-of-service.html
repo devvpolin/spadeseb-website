@@ -80,6 +80,33 @@
     ul {
       padding-left: 20px;
     }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+      }
+
+      .header-right {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .header-right a {
+        width: 100%;
+        text-align: center;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+  }
+
   </style>
 </head>
 <body>
@@ -125,9 +152,9 @@
 
 
     <h2>2. User Content</h2>
-    <p>You are responsible for the content you create or submit using the bot. We do not endorse any user generated content and reserve the right to remove or disable content violating our guidelines. In some cases, even prohibiting your use of the bot completly.</p>
+    <p>You are responsible for the content you create or submit using the bot. We do not endorse any user generated content and reserve the right to remove or disable content violating our guidelines. In some cases, even prohibiting your use of the bot completely.</p>
 
-    <h2>3. SpadesEB is prone to bugs/erorrs</h2>
+    <h2>3. SpadesEB is prone to bugs/errors</h2>
     <p>The bot is provided "as is" without warranties of any kind. We do not guarantee the bot will be perfect or error free.</p>
 
     <h2>4. Liability</h2>
@@ -137,7 +164,9 @@
     <p>We may update these Terms of Service at any time and reserve the right to do so. Continued use of the bot after changes means you accept the new terms.</p>
 
     <h2>6. Contact Us</h2>
-    <p>If you have questions about these terms, please contact us via our support server.</p>
+    <p>If you have questions about these terms, please contact us via our
+      <a href="https://discord.gg/HHUgukKajt" style="color: #66ccff; text-decoration: underline;">Support Server</a>.
+    </p>
 
   </main>
 </body>
