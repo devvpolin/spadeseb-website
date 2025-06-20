@@ -328,6 +328,36 @@
         }
         }
 
+        #menu-toggle {
+    display: none;
+}
+
+        .menu-icon {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .header-right {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 10px;
+                gap: 10px;
+            }
+
+            #menu-toggle:checked + .menu-icon + .header-right {
+                display: flex;
+            }
+        }
+
 
     </style>
 </head>
@@ -344,6 +374,9 @@
             />
             <span class="header-bot-name">SpadesEB</span>
         </div>
+
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
 
         <div class="header-right">
             <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
